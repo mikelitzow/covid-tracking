@@ -104,3 +104,13 @@ ggplot(ny.dat, aes(date, positive)) +
 
 ggsave("figs/Cumulative reported New York cases.png", width=6, height = 4, units="in")
 
+ma.dat <- state.dat %>%
+  filter(state=="MA")
+
+ggplot(ma.dat, aes(date, positive)) +
+  geom_line() +
+  geom_point() +
+  ylab("Cumulative cases") +
+  ggtitle("Total reported Massachusetts cases", subtitle = "Data from covidtracking.com")
+
+ggsave("figs/Cumulative reported Massachusetts cases.png", width=6, height = 4, units="in")
