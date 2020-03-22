@@ -1,7 +1,5 @@
 library(tidyverse)
 
-setwd("/Users/MikeLitzow 1/Documents/R/covid")
-
 download.file("https://covidtracking.com/api/us/daily.csv", "~current.csv") 
 
 dat <- read.csv("~current.csv")
@@ -10,7 +8,11 @@ theme_set(theme_bw())
 
 ggplot(dat, aes(date, positive)) +
   geom_line() +
-  geom_point()
+  geom_point() +
+  ylab("Cumulative cases") +
+  ggtitle("Total reported US cases", subtitle = "Data from covidtracking.com")
+
+ggsave("figs/Cumulative reported US cases.png", width=6, height = 4, units="in")
 
 dat$day <- c(rep(NA, 7), 1:(nrow(dat)-7))
 
@@ -68,18 +70,7 @@ ggplot(plot.dat, aes(day, value, color=name)) +
   ggtitle("Cumulative US deaths: observed vs. different doubling rates",
           subtitle = "Day 1 = March 11; data from covidtracking.com")
 
-ggsave("figs/cumulative US deaths.png", width=6, height=4, units='in')
-
-
-ggplot(dat, aes(date, negative)) +
-  geom_line() +
-  geom_point()
-
-ggplot(dat, aes(date, positive/posNeg)) +
-  geom_line() +
-  geom_point()
-
-
+ggsave("figs/Cumulative US deaths.png", width=6, height=4, units='in')
 
 download.file("http://covidtracking.com/api/states/daily.csv", "~current.state")
 
@@ -94,7 +85,11 @@ wa.dat <- state.dat %>%
 
 ggplot(wa.dat, aes(date, positive)) +
   geom_line() +
-  geom_point()
+  geom_point() +
+  ylab("Cumulative cases") +
+  ggtitle("Total reported Washington cases", subtitle = "Data from covidtracking.com")
+
+ggsave("figs/Cumulative reported Washington cases.png", width=6, height = 4, units="in")
 
 wa.dat
 
@@ -103,5 +98,9 @@ ny.dat <- state.dat %>%
 
 ggplot(ny.dat, aes(date, positive)) +
   geom_line() +
-  geom_point()
+  geom_point() +
+  ylab("Cumulative cases") +
+  ggtitle("Total reported New York cases", subtitle = "Data from covidtracking.com")
+
+ggsave("figs/Cumulative reported New York cases.png", width=6, height = 4, units="in")
 
