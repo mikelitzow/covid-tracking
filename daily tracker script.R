@@ -14,6 +14,10 @@ ggplot(dat, aes(date, positive)) +
 
 ggsave("figs/Cumulative reported US cases.png", width=6, height = 4, units="in")
 
+
+dat <- dat %>%
+  arrange(date)
+
 dat$day <- c(rep(NA, 7), 1:(nrow(dat)-7))
 
 dat <- dat %>%
