@@ -129,3 +129,25 @@ ggplot(la.dat, aes(date, positive)) +
   ggtitle("Total reported Louisiana cases", subtitle = "Data from covidtracking.com")
 
 ggsave("figs/Cumulative reported Louisiana cases.png", width=6, height = 4, units="in")
+
+mi.dat <- state.dat %>%
+  filter(state=="MI")
+
+ggplot(mi.dat, aes(date, positive)) +
+  geom_line() +
+  geom_point() +
+  ylab("Cumulative cases") +
+  ggtitle("Total reported Michigan cases", subtitle = "Data from covidtracking.com")
+
+ggsave("figs/Cumulative reported Michigan cases.png", width=6, height = 4, units="in")
+
+ga.dat <- state.dat %>%
+  filter(state=="GA")
+
+ggplot(ga.dat, aes(date, positive)) +
+  geom_line() +
+  geom_point() +
+  ylab("Cumulative cases") +
+  ggtitle("Total reported Georgia cases", subtitle = "Data from covidtracking.com")
+
+ggsave("figs/Cumulative reported Georgia cases.png", width=6, height = 4, units="in")
