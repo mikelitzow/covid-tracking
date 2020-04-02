@@ -1,4 +1,5 @@
 library(tidyverse)
+library(lubridate)
 
 download.file("https://covidtracking.com/api/us/daily.csv", "~current.csv") 
 
@@ -84,10 +85,20 @@ state.dat
 
 names(state.dat)
 
+state.dat <- state.dat %>%
+  mutate(year=floor(state.dat$date/1e4), 
+         month=floor((date-year*1e4)/1e2),
+         day=date-(floor(date/1e2)*1e2)) %>%
+  unite(date, month, day, year, sep="-") %>%
+  mutate(date=parse_date_time(date, "mdy")) %>%
+  mutate(DayOfYear=yday(date))
+
+
+
 wa.dat <- state.dat %>%
   filter(state=="WA")
 
-ggplot(wa.dat, aes(date, positive)) +
+ggplot(wa.dat, aes(DayOfYear, positive)) +
   geom_line() +
   geom_point() +
   ylab("Cumulative cases") +
@@ -100,7 +111,7 @@ wa.dat
 ny.dat <- state.dat %>%
   filter(state=="NY")
 
-ggplot(ny.dat, aes(date, positive)) +
+ggplot(ny.dat, aes(DayOfYear, positive)) +
   geom_line() +
   geom_point() +
   ylab("Cumulative cases") +
@@ -111,7 +122,7 @@ ggsave("figs/Cumulative reported New York cases.png", width=6, height = 4, units
 ma.dat <- state.dat %>%
   filter(state=="MA")
 
-ggplot(ma.dat, aes(date, positive)) +
+ggplot(ma.dat, aes(DayOfYear, positive)) +
   geom_line() +
   geom_point() +
   ylab("Cumulative cases") +
@@ -122,7 +133,7 @@ ggsave("figs/Cumulative reported Massachusetts cases.png", width=6, height = 4, 
 la.dat <- state.dat %>%
   filter(state=="LA")
 
-ggplot(la.dat, aes(date, positive)) +
+ggplot(la.dat, aes(DayOfYear, positive)) +
   geom_line() +
   geom_point() +
   ylab("Cumulative cases") +
@@ -133,7 +144,7 @@ ggsave("figs/Cumulative reported Louisiana cases.png", width=6, height = 4, unit
 mi.dat <- state.dat %>%
   filter(state=="MI")
 
-ggplot(mi.dat, aes(date, positive)) +
+ggplot(mi.dat, aes(DayOfYear, positive)) +
   geom_line() +
   geom_point() +
   ylab("Cumulative cases") +
@@ -144,7 +155,7 @@ ggsave("figs/Cumulative reported Michigan cases.png", width=6, height = 4, units
 ga.dat <- state.dat %>%
   filter(state=="GA")
 
-ggplot(ga.dat, aes(date, positive)) +
+ggplot(ga.dat, aes(DayOfYear, positive)) +
   geom_line() +
   geom_point() +
   ylab("Cumulative cases") +
