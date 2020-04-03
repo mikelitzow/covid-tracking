@@ -162,3 +162,15 @@ ggplot(ga.dat, aes(DayOfYear, positive)) +
   ggtitle("Total reported Georgia cases", subtitle = "Data from covidtracking.com")
 
 ggsave("figs/Cumulative reported Georgia cases.png", width=6, height = 4, units="in")
+
+
+fl.dat <- state.dat %>%
+  filter(state=="FL")
+
+ggplot(fl.dat, aes(DayOfYear, positive)) +
+  geom_line() +
+  geom_point() +
+  ylab("Cumulative cases") +
+  ggtitle("Total reported Florida cases", subtitle = "Data from covidtracking.com")
+
+ggsave("figs/Cumulative reported Florida cases.png", width=6, height = 4, units="in")
